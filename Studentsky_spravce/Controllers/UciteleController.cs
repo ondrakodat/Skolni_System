@@ -16,11 +16,6 @@ namespace Studentsky_spravce.Controllers
         public IActionResult Index()
         {   
             var ucitele = _databaze.Ucitele.ToList();
-
-            if (!_databaze.Ucitele.Any()) {
-                _databaze.Ucitele.Add(new Ucitel("Sona", "Neradova", 60, "email"));
-                _databaze.SaveChanges();
-            }
             return View(ucitele);
         }
 
@@ -28,13 +23,37 @@ namespace Studentsky_spravce.Controllers
             return View();
         }
 
+        public IActionResult Edit(int id) {
+            Ucitel ucitel = null;
+            try
+            {
+                ucitel = _databaze.Ucitele.FirstOrDefault(u => u.Id == id);              
+
+            }
+            catch (Exception ex) { 
+                Console.WriteLine(ex.Message);
+            }
+            return View(ucitel);
+        }
+
         [HttpPost]
         public IActionResult Create(Ucitel ucitel) {
             _databaze.Ucitele.Add(ucitel);
             _databaze.SaveChanges();
-
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public IActionResult Edit(Ucitel ucitel) {
+            if (ModelState.IsValid) { 
+                   _databaze.Ucitele.Update(ucitel);
+                   _databaze.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+       
 
     }
 }

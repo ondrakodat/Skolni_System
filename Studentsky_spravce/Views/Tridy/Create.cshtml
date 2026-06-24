@@ -1,0 +1,23 @@
+﻿@model Studentsky_spravce.Models.Trida
+
+@{
+    ViewData["Title"] = "Přidat studenta";
+}
+
+<div class="container mt-4">
+    <h1>Přidat studenta</h1>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Nazev" class="form-label">Jméno</label>
+            <input asp-for="Nazev" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TridniUcitel" class="form-label">Příjmení</label>
+            <input asp-for="TridniUcitel" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Uložit</button>
+        <a asp-action="Index" class="btn btn-secondary">Zpět na seznam</a>
+    </form>
+</div>

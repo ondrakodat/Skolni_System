@@ -5,11 +5,24 @@ namespace Studentsky_spravce.Models
 {
     public class Trida
     {
-        public int IdTrida { get; set; }
+        public Trida()
+        {
+        }
+
+        public Trida(string nazev, TridniUcitel tridniUcitel, List<Student> studente)
+        {
+            Nazev = nazev;
+            TridniUcitel = tridniUcitel;
+            Studente = studente;
+        }
+
+
+        public int Id{ get; set; }
         public string Nazev { get; set; } = "";
         public TridniUcitel TridniUcitel { get; set; }
 
         public List<Student> Studente { get; set; } = new();
+
 
 
     }

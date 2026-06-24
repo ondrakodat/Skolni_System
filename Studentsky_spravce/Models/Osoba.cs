@@ -2,7 +2,7 @@
 {
     public class Osoba
     {
-        public int IdOsoba { get; set; }
+        public int Id { get; set; }
         public string Jmeno { get; set; } = "";
         public string Prijmeni { get; set; } = "";
         public int Vek { get; set; }

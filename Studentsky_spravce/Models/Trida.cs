@@ -9,7 +9,7 @@ namespace Studentsky_spravce.Models
         {
         }
 
-        public Trida(string nazev, TridniUcitel tridniUcitel, List<Student> studente)
+        public Trida(string nazev, Ucitel tridniUcitel, List<Student> studente)
         {
             Nazev = nazev;
             TridniUcitel = tridniUcitel;
@@ -19,7 +19,7 @@ namespace Studentsky_spravce.Models
 
         public int Id{ get; set; }
         public string Nazev { get; set; } = "";
-        public TridniUcitel TridniUcitel { get; set; }
+        public Ucitel? TridniUcitel { get; set; }
 
         public List<Student> Studente { get; set; } = new();
 

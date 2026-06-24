@@ -15,44 +15,44 @@ namespace Studentsky_spravce.Controllers
             _databaze = databaze;
         }
 
-        Student S1 = new Student("Ondra", "Kodat", 22, "email");
-        Student S2 = new Student("Tereza", "Hudcova", 19, "email");
-        Student S3 = new Student("Ivana", "Anastasová", 47, "email");
-        Student S4 = new Student("Bohumil", "Kodat", 51, "email");
-        public List<Student> students = new List<Student>();
-        
-       
-        
-        
-
-
         public IActionResult Index()
-        {
-            if (!_databaze.Tridy.Any()) {
-                students.Add(S1);
-                students.Add(S2);
-                students.Add(S3);
-                students.Add(S4);
-                _databaze.Tridy.Add(new Models.Trida("Trida", new Models.TridniUcitel("Ucitel", "Prijmeni", 150, "email"), students));
-                _databaze.SaveChanges(); 
-            }
+        {           
             var Tridy = _databaze.Tridy.Include(t => t.TridniUcitel).Include(t=> t.Studente).ToList();
             return View(Tridy);
         }
 
 
-        public IActionResult Create() { 
+        public IActionResult Create()
+        {
+            ViewBag.Studenti = _databaze.Studenti.ToList();
+            ViewBag.Ucitele = _databaze.Ucitele.ToList();
             return View();
         }
 
+
         [HttpPost]
-        public IActionResult Create(Trida trida) {
-            _databaze.TridniUcitele.Add(trida.TridniUcitel);
+        public IActionResult Create(Trida trida, int tridniUcitel, List<int> vybraniStudenti) {
+            try
+            {
+                var TridniUcitel = _databaze.Ucitele.FirstOrDefault(t => t.Id == tridniUcitel);
+                trida.TridniUcitel =  TridniUcitel;
+            }
+            catch (Exception ex) { 
+                Console.WriteLine(ex.Message.ToString());
+            }
+            var vybraniStudente = _databaze.Studenti.Where(s => vybraniStudenti.Contains(s.Id)).ToList();
+            trida.Studente = vybraniStudente;
+
+           
+
             _databaze.Tridy.Add(trida);
             _databaze.SaveChanges();
 
             return RedirectToAction("Index");
         }
+
+       
+
 
     }
 }

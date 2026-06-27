@@ -1,0 +1,90 @@
+﻿@model Studentsky_spravce.Models.Trida
+
+@{
+    ViewData["Title"] = "Upravit třídu";
+
+    var studenti = ViewBag.Studenti as IEnumerable<Studentsky_spravce.Models.Student>;
+    var ucitele = ViewBag.Ucitele as IEnumerable<Studentsky_spravce.Models.Ucitel>;
+}
+
+<div class="container mt-4">
+
+    <h1 class="mb-4">Upravit třídu</h1>
+
+    <form asp-action="Edit" method="post">
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Nazev" class="form-label">Název třídy</label>
+            <input asp-for="Nazev" class="form-control" />
+            <span asp-validation-for="Nazev" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Třídní učitel</label>
+
+            <select name="tridniUcitel" class="form-select">
+                <option value="">-- Vyber třídního učitele --</option>
+
+                @if (ucitele != null)
+                {
+                    foreach (var ucitel in ucitele)
+                    {
+                        if (Model.TridniUcitel != null && Model.TridniUcitel.Id == ucitel.Id)
+                        {
+                            <option value="@ucitel.Id" selected>
+                                @ucitel.Jmeno @ucitel.Prijmeni
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@ucitel.Id">
+                                @ucitel.Jmeno @ucitel.Prijmeni
+                            </option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Studenti</label>
+
+            @if (studenti != null && studenti.Any())
+            {
+                foreach (var student in studenti)
+                {
+                    bool jeVybrany = Model.Studente != null && Model.Studente.Any(s => s.Id == student.Id);
+
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="vybraniStudenti"
+                               value="@student.Id"
+                               id="student_@student.Id"
+                               @(jeVybrany ? "checked" : "") />
+
+                        <label class="form-check-label" for="student_@student.Id">
+                            @student.Jmeno @student.Prijmeni
+                        </label>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted">Žádní studenti nejsou k dispozici.</p>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Uložit změny
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Zpět
+        </a>
+
+    </form>
+
+</div>

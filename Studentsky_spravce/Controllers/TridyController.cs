@@ -24,7 +24,7 @@ namespace Studentsky_spravce.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Studenti = _databaze.Studenti.ToList();
+            ViewBag.Studenti = _databaze.Studenti.ToList().Where(s => s.Trida == null);
             ViewBag.Ucitele = _databaze.Ucitele.ToList();
             return View();
         }
@@ -51,6 +51,61 @@ namespace Studentsky_spravce.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id) {
+            var trida = _databaze.Tridy
+                .Include(t => t.TridniUcitel)
+                .Include(t => t.Studente)
+                .FirstOrDefault(t => t.Id == id);
+
+            if (trida == null) {
+                return NotFound();
+            }
+
+            ViewBag.Studenti = _databaze.Studenti.ToList();
+            ViewBag.Ucitele = _databaze.Ucitele.ToList();
+
+
+            return View(trida);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(List<int>? Vybranistudenti, int ucitel, Trida trida) {
+            var existujiciTrida = _databaze.Tridy
+                 .Include(t => t.TridniUcitel)
+                 .Include(t => t.Studente)
+                 .FirstOrDefault(t => t.Id == trida.Id);
+
+            if (existujiciTrida == null) {
+                return NotFound();
+            }
+
+            existujiciTrida.Nazev = trida.Nazev;
+
+            if (Vybranistudenti == null) {
+                  Vybranistudenti = new List<int>();
+            }
+
+            var studente =  _databaze.Studenti
+                .Where(s => Vybranistudenti
+                .Contains(s.Id))
+                .ToList();
+
+            var vybranyUcitel = _databaze.Ucitele.FirstOrDefault(u => u.Id == ucitel);
+
+
+            existujiciTrida.Studente.Clear();
+            existujiciTrida.Studente.AddRange(studente);
+            existujiciTrida.TridniUcitel = vybranyUcitel;
+
+            _databaze.Tridy.Update(existujiciTrida);
+            _databaze.SaveChanges();
+
+
+            return RedirectToAction("Index");
+        }
+
+    
        
 
 

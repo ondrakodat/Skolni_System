@@ -1,0 +1,86 @@
+﻿@model Studentsky_spravce.Models.RozvrhHodina
+
+@{
+    ViewData["Title"] = "Přidat hodinu do rozvrhu";
+}
+
+<div class="container mt-4">
+    <h1>Přidat hodinu do rozvrhu</h1>
+
+    <form asp-action="Create" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Třída</label>
+
+            <select name="tridaId" class="form-select">
+                <option value="">-- Vyberte třídu --</option>
+
+                @foreach (var trida in ViewBag.Tridy)
+                {
+                    <option value="@trida.Id">@trida.Nazev</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Předmět</label>
+
+            <select name="predmetId" class="form-select">
+                <option value="">-- Vyberte předmět --</option>
+
+                @foreach (var predmet in ViewBag.Predmety)
+                {
+                    <option value="@predmet.Id">@predmet.Nazev</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Učitel</label>
+
+            <select name="ucitelId" class="form-select">
+                <option value="">-- Vyberte učitele --</option>
+
+                @foreach (var ucitel in ViewBag.Ucitele)
+                {
+                    <option value="@ucitel.Id">
+                        @ucitel.Jmeno @ucitel.Prijmeni
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Den v týdnu</label>
+
+            <select asp-for="DenVTydnu" class="form-select">
+                <option value="">-- Vyberte den --</option>
+                <option value="1">Pondělí</option>
+                <option value="2">Úterý</option>
+                <option value="3">Středa</option>
+                <option value="4">Čtvrtek</option>
+                <option value="5">Pátek</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Hodina" class="form-label">Hodina</label>
+
+            <input asp-for="Hodina"
+                   class="form-control"
+                   type="number"
+                   min="1"
+                   max="10"
+                   placeholder="Zadejte číslo hodiny" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Uložit
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Zpět
+        </a>
+
+    </form>
+</div>

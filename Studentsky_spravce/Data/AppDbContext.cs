@@ -16,6 +16,6 @@ namespace Studentsky_spravce.Data
         public DbSet<RozvrhHodina> Hodiny {  get; set; }
         public DbSet<Znamka> Znamky { get; set; }
         public DbSet<Predmet> Predmety {  get; set; }
-        
+        public DbSet<Rozvrh> Rozvrhs { get; set; }
     }
 }

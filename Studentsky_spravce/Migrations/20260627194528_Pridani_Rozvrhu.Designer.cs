@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Studentsky_spravce.Data;
 
@@ -10,9 +11,11 @@ using Studentsky_spravce.Data;
 namespace Studentsky_spravce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260627194528_Pridani_Rozvrhu")]
+    partial class Pridani_Rozvrhu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.19");
@@ -72,22 +75,6 @@ namespace Studentsky_spravce.Migrations
                     b.ToTable("Predmety");
                 });
 
-            modelBuilder.Entity("Studentsky_spravce.Models.Rozvrh", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TridaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TridaId");
-
-                    b.ToTable("Rozvrhs");
-                });
-
             modelBuilder.Entity("Studentsky_spravce.Models.RozvrhHodina", b =>
                 {
                     b.Property<int>("Id")
@@ -103,9 +90,6 @@ namespace Studentsky_spravce.Migrations
                     b.Property<int>("PredmetId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("RozvrhId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("TridaId")
                         .HasColumnType("INTEGER");
 
@@ -115,8 +99,6 @@ namespace Studentsky_spravce.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PredmetId");
-
-                    b.HasIndex("RozvrhId");
 
                     b.HasIndex("TridaId");
 
@@ -202,17 +184,6 @@ namespace Studentsky_spravce.Migrations
                     b.Navigation("Ucitel");
                 });
 
-            modelBuilder.Entity("Studentsky_spravce.Models.Rozvrh", b =>
-                {
-                    b.HasOne("Studentsky_spravce.Models.Trida", "Trida")
-                        .WithMany()
-                        .HasForeignKey("TridaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Trida");
-                });
-
             modelBuilder.Entity("Studentsky_spravce.Models.RozvrhHodina", b =>
                 {
                     b.HasOne("Studentsky_spravce.Models.Predmet", "Predmet")
@@ -220,10 +191,6 @@ namespace Studentsky_spravce.Migrations
                         .HasForeignKey("PredmetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Studentsky_spravce.Models.Rozvrh", null)
-                        .WithMany("Hodiny")
-                        .HasForeignKey("RozvrhId");
 
                     b.HasOne("Studentsky_spravce.Models.Trida", "Trida")
                         .WithMany()
@@ -279,11 +246,6 @@ namespace Studentsky_spravce.Migrations
                         .HasForeignKey("TridaId");
 
                     b.Navigation("Trida");
-                });
-
-            modelBuilder.Entity("Studentsky_spravce.Models.Rozvrh", b =>
-                {
-                    b.Navigation("Hodiny");
                 });
 
             modelBuilder.Entity("Studentsky_spravce.Models.Trida", b =>

@@ -1,0 +1,62 @@
+﻿@model List<Studentsky_spravce.Models.RozvrhHodina>
+
+@{
+    ViewData["Title"] = "Rozvrh hodin";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Rozvrh hodin</h1>
+
+    <a asp-action="Create" class="btn btn-primary mb-3">
+        Přidat hodinu do rozvrhu
+    </a>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Třída</th>
+                <th>Předmět</th>
+                <th>Učitel</th>
+                <th>Den v týdnu</th>
+                <th>Hodina</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var rozvrh in Model)
+            {
+                <tr>
+                    <td>@rozvrh.Trida.Nazev</td>
+                    <td>@rozvrh.Predmet.NazevPredmetu</td>
+                    <td>@rozvrh.Ucitel.Jmeno @rozvrh.Ucitel.Prijmeni</td>
+
+                    <td>
+                        @switch (rozvrh.DenVTydnu)
+                        {
+                            case 1:
+                                <span>Pondělí</span>
+                                break;
+                            case 2:
+                                <span>Úterý</span>
+                                break;
+                            case 3:
+                                <span>Středa</span>
+                                break;
+                            case 4:
+                                <span>Čtvrtek</span>
+                                break;
+                            case 5:
+                                <span>Pátek</span>
+                                break;
+                            default:
+                                <span>Neznámý den</span>
+                                break;
+                        }
+                    </td>
+
+                    <td>@rozvrh.Hodina</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

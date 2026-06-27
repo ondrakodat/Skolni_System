@@ -10,9 +10,9 @@
 
         public Ucitel Ucitel { get; set; } 
 
-        int DenVTydnu { get; set; }
+        public int DenVTydnu { get; set; }
 
-        int Hodina { get; set; }
+        public int Hodina { get; set; }
 
         public RozvrhHodina( Trida trida, Predmet predmet, Ucitel ucitel, int denVTydnu, int hodina)
         {

@@ -1,4 +1,4 @@
-﻿@model Studentsky_spravce.Models.RozvrhHodina
+﻿@model Studentsky_spravce.Models.Hodina
 
 @{
     ViewData["Title"] = "Přidat hodinu do rozvrhu";
@@ -64,9 +64,9 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="Hodina" class="form-label">Hodina</label>
+            <label asp-for="CisloHodiny" class="form-label">Hodina</label>
 
-            <input asp-for="Hodina"
+            <input asp-for="CisloHodiny"
                    class="form-control"
                    type="number"
                    min="1"

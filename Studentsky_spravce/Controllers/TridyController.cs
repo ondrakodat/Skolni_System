@@ -17,7 +17,11 @@ namespace Studentsky_spravce.Controllers
 
         public IActionResult Index()
         {           
-            var Tridy = _databaze.Tridy.Include(t => t.TridniUcitel).Include(t=> t.Studente).ToList();
+            var Tridy = _databaze.Tridy
+                .Include(t => t.TridniUcitel)
+                .Include(t=> t.Studente)
+                .Include(t=> t.Rozvrh)
+                .ToList();
             return View(Tridy);
         }
 
@@ -43,7 +47,8 @@ namespace Studentsky_spravce.Controllers
             var vybraniStudente = _databaze.Studenti.Where(s => vybraniStudenti.Contains(s.Id)).ToList();
             trida.Studente = vybraniStudente;
 
-           
+            var rozvrh = new Rozvrh();
+            trida.Rozvrh = rozvrh;
 
             _databaze.Tridy.Add(trida);
             _databaze.SaveChanges();
@@ -74,6 +79,7 @@ namespace Studentsky_spravce.Controllers
             var existujiciTrida = _databaze.Tridy
                  .Include(t => t.TridniUcitel)
                  .Include(t => t.Studente)
+                 .Include(t => t.Rozvrh)
                  .FirstOrDefault(t => t.Id == trida.Id);
 
             if (existujiciTrida == null) {
@@ -105,8 +111,16 @@ namespace Studentsky_spravce.Controllers
             return RedirectToAction("Index");
         }
 
-    
-       
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var trida = _databaze.Tridy.FirstOrDefault(u => u.Id == id);
+            _databaze.Remove(trida);
+            _databaze.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
 
 
     }

@@ -35,10 +35,28 @@
                     }
                     </td>
                     <td>
-                        <a asp-action="Edit", asp-route-id="@Trida.Id" class="btn btn-warning">
+                        <a asp-action="Edit" asp-route-id="@Trida.Id" class="btn btn-warning">
                             Upravit
                         </a>
+
+                        @if (Trida.Rozvrh != null && Trida.Rozvrh.Id != 0)
+                        {
+                            <a asp-controller="Rozvrh" asp-action="Index" asp-route-id="@Trida.Rozvrh.Id" class="btn btn-warning">
+                                Zobrazit
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Rozvrh neexistuje</span>
+                        }
+                        <form asp-action="Delete" asp-route-id="@Trida.Id" method="post" style="display:inline;"
+                              onsubmit="return confirm('Opravdu chceš smazat tuto třídu?');">
+                            <button type="submit" class="btn btn-danger">
+                                Smazat
+                            </button>
+                        </form>
                     </td>
+                   
                 </tr>
             }
         </tbody>

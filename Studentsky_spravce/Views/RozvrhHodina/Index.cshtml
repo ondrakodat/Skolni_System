@@ -1,4 +1,4 @@
-﻿@model List<Studentsky_spravce.Models.RozvrhHodina>
+﻿@model List<Studentsky_spravce.Models.Hodina>
 
 @{
     ViewData["Title"] = "Rozvrh hodin";
@@ -26,7 +26,6 @@
             @foreach (var rozvrh in Model)
             {
                 <tr>
-                    <td>@rozvrh.Trida.Nazev</td>
                     <td>@rozvrh.Predmet.NazevPredmetu</td>
                     <td>@rozvrh.Ucitel.Jmeno @rozvrh.Ucitel.Prijmeni</td>
 
@@ -54,7 +53,7 @@
                         }
                     </td>
 
-                    <td>@rozvrh.Hodina</td>
+                    <td>@rozvrh.CisloHodiny</td>
                 </tr>
             }
         </tbody>

@@ -9,8 +9,9 @@ namespace Studentsky_spravce.Models
         {
         }
 
-        public Trida(string nazev, Ucitel tridniUcitel, List<Student> studente)
+        public Trida(string nazev, Ucitel tridniUcitel, List<Student> studente, Rozvrh? rozvrh)
         {
+            Rozvrh = rozvrh;
             Nazev = nazev;
             TridniUcitel = tridniUcitel;
             Studente = studente;
@@ -23,7 +24,7 @@ namespace Studentsky_spravce.Models
 
         public List<Student> Studente { get; set; } = new();
 
-
+        public Rozvrh? Rozvrh { get; set; } = new();
 
     }
 }

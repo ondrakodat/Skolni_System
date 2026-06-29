@@ -31,7 +31,7 @@ namespace Studentsky_spravce.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(int TridaId, RozvrhHodina hodina, List<int>predmetyId, List<int> UciteleId) {
+        public IActionResult Create(int TridaId, Hodina hodina, List<int>predmetyId, List<int> UciteleId) {
           
             _databaze.Add(hodina);
             _databaze.SaveChanges();

@@ -1,0 +1,69 @@
+﻿@model Studentsky_spravce.Models.Rozvrh
+
+@{
+    ViewData["Title"] = "Rozvrh hodin";
+
+    string[] dny = { "Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek" };
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Rozvrh hodin</h1>
+
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mb-3">
+        Editovat rozvrh
+    </a>
+
+    <table class="table table-bordered table-striped text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Den / Hodina</th>
+                <th>1.</th>
+                <th>2.</th>
+                <th>3.</th>
+                <th>4.</th>
+                <th>5.</th>
+                <th>6.</th>
+                <th>7.</th>
+                <th>8.</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (int den = 1; den <= 5; den++)
+            {
+                <tr>
+                    <th class="table-secondary">
+                        @dny[den - 1]
+                    </th>
+
+                    @for (int cisloHodiny = 1; cisloHodiny <= 8; cisloHodiny++)
+                    {
+                        var hodina = Model.Hodiny
+                        .FirstOrDefault(h => h.DenVTydnu == den && h.CisloHodiny == cisloHodiny);
+
+                        <td>
+                            @if (hodina != null)
+                            {
+                                <div>
+                                    <strong>@hodina.Predmet?.NazevPredmetu</strong>
+                                </div>
+
+                                <div class="text-muted small">
+                                    @hodina.Ucitel?.Jmeno @hodina.Ucitel?.Prijmeni
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-controller="Tridy" asp-action="Index" class="btn btn-secondary">
+        Zpět na třídy
+    </a>
+</div>

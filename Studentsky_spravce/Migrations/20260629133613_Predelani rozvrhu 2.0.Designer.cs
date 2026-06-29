@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Studentsky_spravce.Data;
 
@@ -10,9 +11,11 @@ using Studentsky_spravce.Data;
 namespace Studentsky_spravce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260629133613_Predelani rozvrhu 2.0")]
+    partial class Predelanirozvrhu20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.19");
@@ -110,9 +113,14 @@ namespace Studentsky_spravce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("TridaId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Rozvrhy");
+                    b.HasIndex("TridaId");
+
+                    b.ToTable("Rozvrhs");
                 });
 
             modelBuilder.Entity("Studentsky_spravce.Models.Trida", b =>
@@ -128,14 +136,9 @@ namespace Studentsky_spravce.Migrations
                     b.Property<int?>("TridniUcitelId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("rozvrhId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TridniUcitelId");
-
-                    b.HasIndex("rozvrhId");
 
                     b.ToTable("Tridy");
                 });
@@ -220,19 +223,24 @@ namespace Studentsky_spravce.Migrations
                     b.Navigation("Ucitel");
                 });
 
+            modelBuilder.Entity("Studentsky_spravce.Models.Rozvrh", b =>
+                {
+                    b.HasOne("Studentsky_spravce.Models.Trida", "Trida")
+                        .WithMany()
+                        .HasForeignKey("TridaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trida");
+                });
+
             modelBuilder.Entity("Studentsky_spravce.Models.Trida", b =>
                 {
                     b.HasOne("Studentsky_spravce.Models.Ucitel", "TridniUcitel")
                         .WithMany()
                         .HasForeignKey("TridniUcitelId");
 
-                    b.HasOne("Studentsky_spravce.Models.Rozvrh", "rozvrh")
-                        .WithMany()
-                        .HasForeignKey("rozvrhId");
-
                     b.Navigation("TridniUcitel");
-
-                    b.Navigation("rozvrh");
                 });
 
             modelBuilder.Entity("Studentsky_spravce.Models.Znamka", b =>

@@ -91,7 +91,7 @@ namespace Studentsky_spravce.Migrations
                     b.ToTable("Rozvrhs");
                 });
 
-            modelBuilder.Entity("Studentsky_spravce.Models.RozvrhHodina", b =>
+            modelBuilder.Entity("Studentsky_spravce.Models.Hodina", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -216,7 +216,7 @@ namespace Studentsky_spravce.Migrations
                     b.Navigation("Trida");
                 });
 
-            modelBuilder.Entity("Studentsky_spravce.Models.RozvrhHodina", b =>
+            modelBuilder.Entity("Studentsky_spravce.Models.Hodina", b =>
                 {
                     b.HasOne("Studentsky_spravce.Models.Predmet", "Predmet")
                         .WithMany()

@@ -7,16 +7,14 @@ namespace Studentsky_spravce.Models
         {
         }
 
-        public Rozvrh(int id, Trida trida, List<RozvrhHodina> hodiny)
+        public Rozvrh(int id, List<Hodina> hodiny)
         {
             Id = id;
-            Trida = trida;
             Hodiny = hodiny;
         }
 
         public int Id { get; set; }
-        public Trida Trida { get; set; }
-        public List<RozvrhHodina> Hodiny { get; set; } = new();
+        public List<Hodina> Hodiny { get; set; } = new();
 
 
     }
